@@ -62,6 +62,10 @@ def list_path(step:int, final:int):
     return pokemons[step:step+final]
 
 
+@app.post("/pokemons")
+def catch_pokemon(new_pk:Pokemon):
+    pokemons.append(new_pk)
+    return {f"Pokemon: {pokemons[-1].name} added"}
 
 
 

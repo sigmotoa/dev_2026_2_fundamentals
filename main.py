@@ -61,6 +61,10 @@ def list_query(step:int, final:int):
 def list_path(step:int, final:int):
     return pokemons[step:step+final]
 
+@app.post("/pokemons")
+def catch_pokemon(p_n:Pokemon):
+    pokemons.append(p_n)
+    return {"Pokemon":"Catched"}
 
 
 

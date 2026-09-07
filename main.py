@@ -68,5 +68,16 @@ def catch_pokemon(new_pk:Pokemon):
     return {f"Pokemon: {pokemons[-1].name} added"}
 
 
+@app.patch("/pokemons")
+def modifie_pokemon(id:int, new_name:str):
+    old_name = pokemons[id].name
+    pokemons[id].name=new_name
+    return {f"The new pokemon for {old_name} now is named as {pokemons[id].name}"}
+
+
+@app.delete("/pokemons")
+def delete_pokemon(id:int):
+    pokemons.pop(id)
+    return {"Job has been done"}
 
 

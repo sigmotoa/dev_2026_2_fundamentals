@@ -66,6 +66,21 @@ def catch_pokemon(p_n:Pokemon):
     pokemons.append(p_n)
     return {"Pokemon":"Catched"}
 
+@app.patch("/pokemons")
+def update_pokemon(id:int, name:str):
+    
+    for pokemon in pokemons:
+            if pokemon.id==id:
+                pokemons[pokemon.id].name=name
+                
+                break
+    return pokemons[id+1]
+
+@app.delete("/pokemons")
+def kill_pokemon(id:int):
+    pokemons.pop(id)
+    return {"bye bye":"bye bye"}
+
 
 
 

@@ -62,6 +62,24 @@ def list_path(step:int, final:int):
     return pokemons[step:step+final]
 
 
+@app.post("/pokemons")
+def catch_pokemon(pk1:Pokemon):
+    pokemons.append(pk1)
+    return pokemons[-1]
+
+@app.patch("/pokemons")
+def update_pokemon(id:int, name:str):
+    old_name = pokemons[id].name
+    pokemons[id].name=name
+    return f"{"El pokemon antes conocido como: {old_name} ahora se llama {pokemons[id].name}"}"
+
+
+@app.delete("/pokemons")
+def remove_pokemon(id:int):
+    old = pokemons[id]
+    pokemons.pop(id)
+    return f"{old} has been removed"
+
 
 
 

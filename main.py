@@ -1,35 +1,10 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from model import PokemonBase, PokemonCatched
 
-class Type(BaseModel):
-    id:int
-    name:str
 
-class Pokemon(BaseModel):
-    id:int
-    name:str
-    type:Type
 
-leaf=Type(id=1,name="Leaf")
-fire=Type(id=2,name="Fire")
-water=Type(id=3,name="Water")
-bug=Type(id=4,name="Bug")
-ghost=Type(id=5,name="Ghost")
 
-types=[leaf,fire,water,bug,ghost]
-
-pokemons = [
-    Pokemon(id=1, name="Bulbasaur", type=types[0]),
-    Pokemon(id=2, name="Ivysaur", type=types[0]),
-    Pokemon(id=3, name="Venusaur", type=types[0]),
-    Pokemon(id=4, name="Charmander", type=types[1]),
-    Pokemon(id=5, name="Charmeleon", type=types[1]),
-    Pokemon(id=6, name="Charizard", type=types[1]),
-    Pokemon(id=7, name="Squirtle", type=types[2]),
-    Pokemon(id=8, name="Wartortle", type=types[2]),
-    Pokemon(id=9, name="Blastoise", type=types[2]),
-    Pokemon(id=10, name="Caterpie", type=types[3]),
-]
+pokemons:PokemonBase = []
 
 app = FastAPI()
 
@@ -37,7 +12,7 @@ app = FastAPI()
 def show():
     return pokemons
 
-@app.get("/pokemons/v1/{id}")
+@app.get("/pokemons/v1/{id}", response_model=PokemonCatched)
 def show_one(id:int):
     return pokemons[id]
 
@@ -62,10 +37,11 @@ def list_path(step:int, final:int):
     return pokemons[step:step+final]
 
 
-@app.post("/pokemons")
-def catch_pokemon(new_pk:Pokemon):
+@app.post("/pokemons", response_model=PokemonCatched)
+def catch_pokemon(new_pk:PokemonBase):
+    catched = new_pk
     pokemons.append(new_pk)
-    return {f"Pokemon: {pokemons[-1].name} added"}
+    return catched
 
 
 @app.patch("/pokemons")

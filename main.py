@@ -1,23 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-class Type(BaseModel):
-    id:int
-    name:str
-
-class Pokemon(BaseModel):
-    id:int
-    name:str
-    type:Type
-
-leaf=Type(id=1,name="Leaf")
-fire=Type(id=2,name="Fire")
-water=Type(id=3,name="Water")
-bug=Type(id=4,name="Bug")
-ghost=Type(id=5,name="Ghost")
-
-types=[leaf,fire,water,bug,ghost]
-
 pokemons = [
     Pokemon(id=1, name="Bulbasaur", type=types[0]),
     Pokemon(id=2, name="Ivysaur", type=types[0]),

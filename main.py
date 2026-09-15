@@ -1,16 +1,19 @@
 from fastapi import FastAPI
-#from pydantic import BaseModel
 from model import PokemonBase, PokemonCatched
+
+
+
 
 pokemons:PokemonBase = []
 
 app = FastAPI()
 
 @app.get("/pokemons/v1", response_model=list[PokemonCatched])
+@app.get("/pokemons/v1", response_model=list[PokemonCatched])
 def show():
     return pokemons
 
-@app.get("/pokemons/v1/{id}")
+@app.get("/pokemons/v1/{id}", response_model=PokemonCatched)
 def show_one(id:int):
     return pokemons[id]
 
@@ -34,28 +37,24 @@ def list_query(step:int, final:int):
 def list_path(step:int, final:int):
     return pokemons[step:step+final]
 
+
 @app.post("/pokemons", response_model=PokemonCatched)
-def catch_pokemon(p_n:PokemonBase):
-    new_pokemon = p_n
-    pokemons.append(new_pokemon)
-    return new_pokemon
+def catch_pokemon(new_pk:PokemonBase):
+    catched = new_pk
+    pokemons.append(new_pk)
+    return catched
+
 
 @app.patch("/pokemons")
-def update_pokemon(id:int, name:str):
-    
-    for pokemon in pokemons:
-            if pokemon.id==id:
-                pokemons[pokemon.id].name=name
-                
-                break
-    return pokemons[id+1]
+def modifie_pokemon(id:int, new_name:str):
+    old_name = pokemons[id].name
+    pokemons[id].name=new_name
+    return {f"The new pokemon for {old_name} now is named as {pokemons[id].name}"}
+
 
 @app.delete("/pokemons")
-def kill_pokemon(id:int):
+def delete_pokemon(id:int):
     pokemons.pop(id)
-    return {"bye bye":"bye bye"}
-
-
-
+    return {"Job has been done"}
 
 

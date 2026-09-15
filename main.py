@@ -1,26 +1,23 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from models import PokemonBase,PokemonCatched, PokemonUpdated
 from poke_types import Poke_type
 
 
-class Pokemon(BaseModel):
-    id:int
-    name:str
-    type:Poke_type
+
 
 
 
 pokemons = [
-    Pokemon(id=1, name="Bulbasaur", type=Poke_type.LEAF),
-    Pokemon(id=2, name="Ivysaur", type="Leaf"),
-    Pokemon(id=3, name="Venusaur", type="Leaf"),
-    Pokemon(id=4, name="Charmander", type=Poke_type.FIRE),
-    Pokemon(id=5, name="Charmeleon", type=Poke_type.FIRE),
-    Pokemon(id=6, name="Charizard", type=Poke_type.FIRE),
-    Pokemon(id=7, name="Squirtle", type=Poke_type.WATER),
-    Pokemon(id=8, name="Wartortle", type=Poke_type.WATER),
-    Pokemon(id=9, name="Blastoise", type=Poke_type.WATER),
-    Pokemon(id=10, name="Caterpie", type=Poke_type.BUG),
+    PokemonBase(id=1, name="Bulbasaur", type=Poke_type.LEAF),
+    PokemonBase(id=2, name="Ivysaur", type="Leaf"),
+    PokemonBase(id=3, name="Venusaur", type="Leaf"),
+    PokemonBase(id=4, name="Charmander", type=Poke_type.FIRE),
+    PokemonBase(id=5, name="Charmeleon", type=Poke_type.FIRE),
+    PokemonBase(id=6, name="Charizard", type=Poke_type.FIRE),
+    PokemonBase(id=7, name="Squirtle", type=Poke_type.WATER),
+    PokemonBase(id=8, name="Wartortle", type=Poke_type.WATER),
+    PokemonBase(id=9, name="Blastoise", type=Poke_type.WATER),
+    PokemonBase(id=10, name="Caterpie", type=Poke_type.BUG),
 ]
 
 app = FastAPI()
@@ -54,16 +51,16 @@ def list_path(step:int, final:int):
     return pokemons[step:step+final]
 
 
-@app.post("/pokemons")
-def catch_pokemon(pk1:Pokemon):
+@app.post("/pokemons", response_model=PokemonCatched)
+def catch_pokemon(pk1:PokemonBase):
     pokemons.append(pk1)
-    return pokemons[-1]
+    return pk1
 
-@app.patch("/pokemons")
-def update_pokemon(id:int, name:str):
-    old_name = pokemons[id].name
-    pokemons[id].name=name
-    return f"{"El pokemon antes conocido como: {old_name} ahora se llama {pokemons[id].name}"}"
+@app.patch("/pokemons", response_model=PokemonBase)
+def update_pokemon(id:int, updated:PokemonUpdated):
+    #old_name = pokemons[id].name
+    pokemons[id].status=updated.status
+    return pokemons[id]
 
 
 @app.delete("/pokemons")

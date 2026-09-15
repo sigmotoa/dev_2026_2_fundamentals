@@ -9,3 +9,4 @@ class Poke_type(str, Enum):
     POISSON = "Poisson"
     ELECTRIC = "Electric"
     FAIRY = "Fairy"
+    None

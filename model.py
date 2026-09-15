@@ -13,4 +13,5 @@ class PokemonBase(BaseModel):
 
 class PokemonCatched(BaseModel):
     name:str
-    type:Poke_type
+    type_1:Poke_type
+    type_2:Poke_type

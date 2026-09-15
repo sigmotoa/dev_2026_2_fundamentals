@@ -9,6 +9,7 @@ pokemons:PokemonBase = []
 app = FastAPI()
 
 @app.get("/pokemons/v1", response_model=list[PokemonCatched])
+@app.get("/pokemons/v1", response_model=list[PokemonCatched])
 def show():
     return pokemons
 

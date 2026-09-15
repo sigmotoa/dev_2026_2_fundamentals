@@ -1,8 +1,12 @@
 from enum import Enum
 
-class Poke_type(str, Enum):
+class Poke_types(str, Enum):
     LEAF = "Leaf"
     FIRE = "Fire"
     WATER = "Water"
     BUG = "Bug"
-    ELECTRIC = "Electric"
+    GHOST = "Ghost"
+    FAIRY = "Fairy"
+    FIGHT = "Fight"
+
+

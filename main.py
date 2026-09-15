@@ -1,34 +1,26 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from poke_types import Poke_type
 
-class Type(BaseModel):
-    id:int
-    name:str
 
 class Pokemon(BaseModel):
     id:int
     name:str
-    type:Type
+    type:Poke_type
 
-leaf=Type(id=1,name="Leaf")
-fire=Type(id=2,name="Fire")
-water=Type(id=3,name="Water")
-bug=Type(id=4,name="Bug")
-ghost=Type(id=5,name="Ghost")
 
-types=[leaf,fire,water,bug,ghost]
 
 pokemons = [
-    Pokemon(id=1, name="Bulbasaur", type=types[0]),
-    Pokemon(id=2, name="Ivysaur", type=types[0]),
-    Pokemon(id=3, name="Venusaur", type=types[0]),
-    Pokemon(id=4, name="Charmander", type=types[1]),
-    Pokemon(id=5, name="Charmeleon", type=types[1]),
-    Pokemon(id=6, name="Charizard", type=types[1]),
-    Pokemon(id=7, name="Squirtle", type=types[2]),
-    Pokemon(id=8, name="Wartortle", type=types[2]),
-    Pokemon(id=9, name="Blastoise", type=types[2]),
-    Pokemon(id=10, name="Caterpie", type=types[3]),
+    Pokemon(id=1, name="Bulbasaur", type=Poke_type.LEAF),
+    Pokemon(id=2, name="Ivysaur", type="Leaf"),
+    Pokemon(id=3, name="Venusaur", type="Leaf"),
+    Pokemon(id=4, name="Charmander", type=Poke_type.FIRE),
+    Pokemon(id=5, name="Charmeleon", type=Poke_type.FIRE),
+    Pokemon(id=6, name="Charizard", type=Poke_type.FIRE),
+    Pokemon(id=7, name="Squirtle", type=Poke_type.WATER),
+    Pokemon(id=8, name="Wartortle", type=Poke_type.WATER),
+    Pokemon(id=9, name="Blastoise", type=Poke_type.WATER),
+    Pokemon(id=10, name="Caterpie", type=Poke_type.BUG),
 ]
 
 app = FastAPI()
